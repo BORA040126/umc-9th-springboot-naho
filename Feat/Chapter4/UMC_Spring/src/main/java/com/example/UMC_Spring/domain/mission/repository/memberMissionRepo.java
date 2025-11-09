@@ -6,7 +6,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
+public interface memberMissionRepo extends JpaRepository<MemberMission, Long> {
 
     @Query(value = "SELECT mm FROM MemberMission mm WHERE mm.member = :member",
             countQuery = "SELECT COUNT(mm) FROM MemberMission mm WHERE mm.member = :member")

@@ -25,7 +25,7 @@ public class Member {
 
     //성별, Enum을 통해 범위 지정
     @Enumerated(EnumType.STRING)
-    @Column(name="gender",nullable = false, columnDefinition = "String DEFAULT NONE")
+    @Column(name="gender",nullable = false)
     private Gender gender;
 
     //생년월일

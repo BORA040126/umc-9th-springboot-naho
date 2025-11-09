@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-public interface FoodRepository extends JpaRepository<Food, Long> {
+public interface FoodRepo extends JpaRepository<Food, Long> {
 
     @Query("SELECT f FROM Food f")
     List<Food> findAllFoods();

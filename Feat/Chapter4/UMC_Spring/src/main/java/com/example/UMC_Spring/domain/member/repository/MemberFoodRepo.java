@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-public interface MemberFoodRepository extends JpaRepository<MemberFood, Long> {
+public interface MemberFoodRepo extends JpaRepository<MemberFood, Long> {
 
     @Query("SELECT mf FROM MemberFood mf WHERE mf.memberId = :member")
     List<MemberFood> findByMember(@Param("member") Member member);
