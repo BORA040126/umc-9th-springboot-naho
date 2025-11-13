@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-public interface MissionRepository extends JpaRepository<Mission, Long> {
+public interface MissionRepo extends JpaRepository<Mission, Long> {
 
     @Query(value = "SELECT m FROM Mission m WHERE m.store IN :stores AND m.deadline >= CURRENT_DATE",
             countQuery = "SELECT COUNT(m) FROM Mission m WHERE m.store IN :stores AND m.deadline >= CURRENT_DATE")

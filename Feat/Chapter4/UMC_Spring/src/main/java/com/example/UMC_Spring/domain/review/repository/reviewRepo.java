@@ -7,7 +7,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface reviewRepo extends JpaRepository<Review, Long>,reviewQueryDsl {
 
     @Query(value = "SELECT r FROM Review r WHERE r.member = :member ORDER BY r.createdAt DESC",
             countQuery = "SELECT COUNT(r) FROM Review r WHERE r.member = :member")

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-public interface StoreRepository extends JpaRepository<Store, Long> {
+public interface StoreRepo extends JpaRepository<Store, Long> {
 
     @Query("SELECT s FROM Store s WHERE s.location = :location")
     List<Store> findByLocation(@Param("location") Location location);
