@@ -16,24 +16,20 @@ public class ReviewService {
     private final reviewRepo reviewRepo;
     private final MemberRepo memberRepo;
 
-    public Page<Review> getMyReviews(Long memberId,
-                                     String storeName,
-                                     Integer starGroup,
-                                     Pageable pageable) {
 
+    public Page<ReviewSummaryResponse> getMySimpleReviews(
+            Long memberId,
+            String storeName,
+            Integer starGroup,
+            Pageable pageable
+    ) {
         Member member = memberRepo.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("member not found"));
+                .orElseThrow(() -> new RuntimeException("member not found"));
 
-        return reviewRepo.searchMyReviews(member, storeName, starGroup, pageable);
-    }
+        Page<Review> reviewPage =
+                reviewRepo.searchMyReviews(member, storeName, starGroup, pageable);
 
-    public Page<ReviewSummaryResponse> getMyReviewsSimple(Long memberId,
-                                                          String storeName,
-                                                          Integer starGroup,
-                                                          Pageable pageable) {
-        Page<Review> page = getMyReviews(memberId, storeName, starGroup, pageable);
-
-        return page.map(r -> new ReviewSummaryResponse(
+        return reviewPage.map(r -> new ReviewSummaryResponse(
                 r.getStore().getName(),
                 r.getMember().getMemberName(),
                 r.getStar(),
@@ -41,6 +37,7 @@ public class ReviewService {
         ));
     }
 }
+
 
 
 
