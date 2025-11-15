@@ -4,11 +4,11 @@ import com.example.UMC_Spring.domain.review.dto.ReviewSummaryResponse;
 import com.example.UMC_Spring.domain.review.service.ReviewService;
 import com.example.UMC_Spring.global.apiPayload.ApiResponse;
 import com.example.UMC_Spring.global.apiPayload.code.GeneralSuccessCode;
+import com.example.UMC_Spring.global.apiPayload.code.GeneralErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -27,8 +27,18 @@ public class ReviewController {
         Page<ReviewSummaryResponse> result =
                 reviewService.getMySimpleReviews(memberId, storeName, starGroup, pageable);
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.REVIEW_FETCH_SUCCESS, result);
-    }
+        if (result == null || result.getTotalElements() == 0) {
+            return ApiResponse.onFailure(
+                    GeneralErrorCode.NOT_FOUND,
+                    null
+            );
+        }
 
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.REVIEW_FETCH_SUCCESS,
+                result
+        );
+    }
 }
+
 
