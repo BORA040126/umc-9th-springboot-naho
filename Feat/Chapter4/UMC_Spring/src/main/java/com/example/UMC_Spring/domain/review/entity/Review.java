@@ -36,4 +36,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name="user_id")
     private Member member;
+
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
 }
