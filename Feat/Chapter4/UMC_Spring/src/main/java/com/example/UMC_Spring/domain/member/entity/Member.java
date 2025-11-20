@@ -2,13 +2,18 @@ package com.example.UMC_Spring.domain.member.entity;
 
 import com.example.UMC_Spring.domain.member.enums.Gender;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name="member")
