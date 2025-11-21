@@ -70,4 +70,10 @@ public class Member {
     private LocalDateTime updatedAt;
 
 
+
+
+
+
+
+
 }

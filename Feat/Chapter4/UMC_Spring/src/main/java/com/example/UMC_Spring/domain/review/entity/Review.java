@@ -3,12 +3,17 @@ package com.example.UMC_Spring.domain.review.entity;
 import com.example.UMC_Spring.domain.member.entity.Member;
 import com.example.UMC_Spring.domain.store.entity.Store;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.apache.catalina.User;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
+
+@Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name="review")

@@ -5,6 +5,7 @@ import com.example.UMC_Spring.domain.member.dto.MemberResDTO;
 import com.example.UMC_Spring.domain.member.exception.code.MemberSuccessCode;
 import com.example.UMC_Spring.domain.member.service.command.MemberCommandService;
 import com.example.UMC_Spring.global.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,10 @@ public class MemberController {
 
     @PostMapping("/auth/signup")
     public ApiResponse<MemberResDTO.JoinDTO> signUp(
-            @RequestBody MemberReqDTO.JoinDTO dto
+            @RequestBody @Valid MemberReqDTO.JoinDTO dto
     )
     {
-        return ApiResponse.onSuccess(MemberSuccessCode.FOUND, memberCommandService.signup(dto));
+        return ApiResponse.onSuccess(MemberSuccessCode.FOUND);
     }
 
 }

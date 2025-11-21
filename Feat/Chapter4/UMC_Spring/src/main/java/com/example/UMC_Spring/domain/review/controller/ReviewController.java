@@ -1,6 +1,8 @@
 package com.example.UMC_Spring.domain.review.controller;
 
+import com.example.UMC_Spring.domain.review.dto.ReviewReqDTO;
 import com.example.UMC_Spring.domain.review.dto.ReviewSummaryResponse;
+import com.example.UMC_Spring.domain.review.service.ReviewCommandService;
 import com.example.UMC_Spring.domain.review.service.ReviewService;
 import com.example.UMC_Spring.global.apiPayload.ApiResponse;
 import com.example.UMC_Spring.global.apiPayload.code.GeneralSuccessCode;
@@ -15,30 +17,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final ReviewCommandService reviewCommandService;
 
-    @GetMapping("/me/simple")
-    public ApiResponse<Page<ReviewSummaryResponse>> getMyReviewsSimple(
+    @PostMapping("/{storeId}")
+    public ApiResponse<?> createReview(
+            @PathVariable Long storeId,
             @RequestParam Long memberId,
-            @RequestParam(required = false) String storeName,
-            @RequestParam(required = false) Integer starGroup,
-            Pageable pageable
+            @RequestBody ReviewReqDTO.Create dto
+
     ) {
-        Page<ReviewSummaryResponse> result =
-                reviewService.getMySimpleReviews(memberId, storeName, starGroup, pageable);
-
-        if (result == null || result.getTotalElements() == 0) {
-            return ApiResponse.onFailure(
-                    GeneralErrorCode.NOT_FOUND,
-                    null
-            );
-        }
-
-        return ApiResponse.onSuccess(
-                GeneralSuccessCode.REVIEW_FETCH_SUCCESS,
-                result
-        );
+        Long reviewId= reviewCommandService.createReview(memberId, storeId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK);
     }
+
 }
 
 

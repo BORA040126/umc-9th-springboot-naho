@@ -1,6 +1,5 @@
 package com.example.UMC_Spring.domain.test.controller;
 
-import com.example.UMC_Spring.domain.test.converter.TestConverter;
 import com.example.UMC_Spring.domain.test.dto.res.TestResDTO;
 import com.example.UMC_Spring.domain.test.service.query.TestQueryService;
 import com.example.UMC_Spring.global.apiPayload.ApiResponse;
@@ -23,8 +22,7 @@ public class TestController {
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;
         return ApiResponse.onSuccess(
-                code,
-                TestConverter.toTestingDTO("This is Test!")
+                code
         );
     }
 
@@ -38,7 +36,7 @@ public class TestController {
 
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;
-        return ApiResponse.onSuccess(code, TestConverter.toExceptionDTO("This is Test!"));
+        return ApiResponse.onSuccess(code);
     }
 }
 

@@ -40,6 +40,13 @@ dependencies {
     annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.13'
+
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {

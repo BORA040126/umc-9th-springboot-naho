@@ -2,8 +2,12 @@ package com.example.UMC_Spring.domain.member.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name="member_food")
