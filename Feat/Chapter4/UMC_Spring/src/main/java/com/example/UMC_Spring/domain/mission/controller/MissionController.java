@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/missions")
 @RequiredArgsConstructor
 public class MissionController {
+
     private final MissionCommandService missionCommandService;
 
-    @PostMapping("/{MissionId}")
+    @PostMapping("/{StoreId}")
     public ApiResponse<?> createMission(
-            @PathVariable Long MissionId
-            ,@RequestBody MissionReqDTO.Create dto){
-        Long missionId= missionCommandService.createMission(MissionId, dto);
+            @PathVariable Long StoreId
+            ,@RequestBody MissionReqDTO.MissionCreate dto
+    ){
+        Long MissionId= missionCommandService.createMission(StoreId, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK);
     }
 }

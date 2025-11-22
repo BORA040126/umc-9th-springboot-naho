@@ -17,14 +17,14 @@ public class MissionCommandServiceImpl implements MissionCommandService {
 
     private final MissionRepo missionRepo;
     private final StoreRepo storeRepo;
-    public Long createMission(Long storeId, MissionReqDTO.Create dto)
+    public Long createMission(Long storeId, MissionReqDTO.MissionCreate dto)
     {
         Store store=storeRepo.findById(storeId)
                 .orElseThrow(()->new StoreException(StoreErrorCode.NOT_FOUND));
         Mission mission=Mission.builder()
                 .store(store)
                 .deadline(dto.deadline())
-                .conditional(dto.Conditional())
+                .conditional(dto.conditional())
                 .point(dto.point())
                 .build();
 

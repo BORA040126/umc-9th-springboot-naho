@@ -6,14 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MissionReqDTO {
-    public record Create(
-            @NotBlank
+    public record MissionCreate(
             Date deadline,
-
-            @NotBlank
-            String Conditional,
-
-            @NotBlank
+            String conditional,
             int point
 
             ){

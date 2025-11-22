@@ -2,6 +2,7 @@ package com.example.UMC_Spring.domain.mission.repository;
 
 import com.example.UMC_Spring.domain.member.entity.Member;
 import com.example.UMC_Spring.domain.mission.entity.MemberMission;
+import com.example.UMC_Spring.domain.mission.entity.Mission;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,6 @@ public interface memberMissionRepo extends JpaRepository<MemberMission, Long> {
 
     @Query("SELECT COUNT(mm) FROM MemberMission mm WHERE mm.member = :member AND mm.isComplete = true")
     long countCompletedByMember(@Param("member") Member member);
+    boolean existsByMemberAndMission(Member member, Mission mission);
 }
 
