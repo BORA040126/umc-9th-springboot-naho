@@ -1,4 +1,4 @@
-package com.example.UMC_Spring.domain.store.service;
+package com.example.UMC_Spring.domain.mission.service;
 
 import com.example.UMC_Spring.domain.mission.dto.MissionListDTO;
 import org.springframework.data.repository.query.Param;
