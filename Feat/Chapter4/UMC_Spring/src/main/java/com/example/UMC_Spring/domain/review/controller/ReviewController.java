@@ -1,8 +1,12 @@
 package com.example.UMC_Spring.domain.review.controller;
 
+import com.example.UMC_Spring.domain.review.dto.ReviewPreviewListDTO;
 import com.example.UMC_Spring.domain.review.dto.ReviewReqDTO;
+import com.example.UMC_Spring.domain.review.dto.ReviewResDTO;
 import com.example.UMC_Spring.domain.review.dto.ReviewSummaryResponse;
+import com.example.UMC_Spring.domain.review.exception.code.ReviewSuccessCode;
 import com.example.UMC_Spring.domain.review.service.ReviewCommandService;
+import com.example.UMC_Spring.domain.review.service.ReviewQueryService;
 import com.example.UMC_Spring.domain.review.service.ReviewService;
 import com.example.UMC_Spring.global.apiPayload.ApiResponse;
 import com.example.UMC_Spring.global.apiPayload.code.GeneralSuccessCode;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewCommandService reviewCommandService;
+    private final ReviewQueryService reviewQueryService;
+
 
     @PostMapping("/{storeId}")
     public ApiResponse<?> createReview(
@@ -28,6 +34,17 @@ public class ReviewController {
     ) {
         Long reviewId= reviewCommandService.createReview(memberId, storeId, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK);
+    }
+
+    @GetMapping("/{memberId}/reviews")
+    public ApiResponse<ReviewPreviewListDTO> getUserReviews(
+            @PathVariable Long memberId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        ReviewPreviewListDTO result= reviewQueryService.getUserReviewList(memberId, page, size);
+
+        return ApiResponse.onSuccessWithData(GeneralSuccessCode.OK,result);
     }
 
 }

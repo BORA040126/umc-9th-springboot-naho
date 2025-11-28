@@ -1,0 +1,15 @@
+package com.example.UMC_Spring.domain.review.repository;
+
+import com.example.UMC_Spring.domain.review.entity.Review;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    @Query("SELECT r FROM Review r WHERE r.member.memberId = :memberId")
+    Page<Review> findByMemberId(@Param("memberId") Long memberId, Pageable pageable);
+}

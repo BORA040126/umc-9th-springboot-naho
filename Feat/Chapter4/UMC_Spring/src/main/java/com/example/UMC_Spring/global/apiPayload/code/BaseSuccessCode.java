@@ -6,6 +6,7 @@ public interface BaseSuccessCode {
     HttpStatus getStatus();
     String getCode();
     String getMessage();
+
 }
 
 
