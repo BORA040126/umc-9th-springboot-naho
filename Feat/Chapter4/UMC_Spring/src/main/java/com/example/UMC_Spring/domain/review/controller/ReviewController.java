@@ -28,8 +28,18 @@ public class ReviewController {
     ) {
         Long reviewId= reviewCommandService.createReview(memberId, storeId, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK);
-    }
+        if (result == null || result.getTotalElements() == 0) {
+            return ApiResponse.onFailure(
+                    GeneralErrorCode.NOT_FOUND,
+                    null
+            );
+        }
 
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.REVIEW_FETCH_SUCCESS,
+                result
+        );
+    }
 }
 
 
