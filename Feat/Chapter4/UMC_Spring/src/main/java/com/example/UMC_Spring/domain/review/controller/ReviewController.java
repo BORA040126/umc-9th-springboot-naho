@@ -21,20 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
-public class ReviewController {
+public class ReviewController implements ReviewControllerDocs{
 
     private final ReviewCommandService reviewCommandService;
     private final ReviewQueryService reviewQueryService;
 
 
-    @Operation(
-            summary="가게에 리뷰 작성",
-            description = "storeId와 memberId를 이용하여 리뷰를 가게에 멤버가 리뷰를 작성합니다"
-    )
-    @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400",description = "실패")
-    })
     @PostMapping("/")
     public ApiResponse<?> createReview(
             @PathVariable Long storeId,
@@ -46,14 +38,7 @@ public class ReviewController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK);
     }
 
-    @Operation(
-            summary="멤버 기반 리뷰 조회",
-            description = "멤버가 작성한 리뷰를 표시합니다"
-    )
-    @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400",description = "실패")
-    })
+
     @GetMapping("/{memberId}/reviews")
     public ApiResponse<ReviewPreviewListDTO> getUserReviews(
             @PathVariable Long memberId,
