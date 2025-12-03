@@ -6,6 +6,7 @@ import com.example.UMC_Spring.domain.member.exception.code.MemberErrorCode;
 import com.example.UMC_Spring.domain.member.repository.MemberRepo;
 import com.example.UMC_Spring.domain.mission.entity.MemberMission;
 import com.example.UMC_Spring.domain.mission.entity.Mission;
+import com.example.UMC_Spring.domain.mission.exception.code.MissionErrorCode;
 import com.example.UMC_Spring.domain.mission.repository.MissionRepo;
 import com.example.UMC_Spring.domain.mission.repository.memberMissionRepo;
 import com.example.UMC_Spring.global.apiPayload.code.BaseErrorCode;
@@ -22,12 +23,12 @@ public class MemberMissionCommandService {
     private final MissionRepo missionRepo;
     private final memberMissionRepo memberMissionRepo;
 
-    //MISSION ERROR 코드 만들기
+
     public Long assignMissionToMember(Long memberId, Long MissionId){
         Member member = memberRepo.findById(memberId)
                 .orElseThrow(()->new MemberException(MemberErrorCode.NOT_FOUND));
         Mission mission = missionRepo.findById(MissionId)
-                .orElseThrow(()->new GeneralException(MemberErrorCode.NOT_FOUND));
+                .orElseThrow(()->new GeneralException(MissionErrorCode.NOT_FOUND));
 
         if(memberMissionRepo.existsByMemberAndMission(member, mission)){
             throw new MemberException(MemberErrorCode.NOT_FOUND);
