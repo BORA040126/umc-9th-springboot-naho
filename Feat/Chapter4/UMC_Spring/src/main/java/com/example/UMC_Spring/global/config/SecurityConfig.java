@@ -1,10 +1,12 @@
 package com.example.UMC_Spring.global.config;
 import com.example.UMC_Spring.global.auth.CustomUserDetailsService;
+import com.example.UMC_Spring.global.auth.jwt.AuthenticationEntryPointImpl;
 import com.example.UMC_Spring.global.auth.jwt.JwtAuthFilter;
 import com.example.UMC_Spring.global.auth.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -49,7 +52,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
-                );
+                )
+                .exceptionHandling(exception->exception.authenticationEntryPoint(authenticationEntryPoint()));
 
         return http.build();
     }
@@ -63,7 +67,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new AuthenticationEntryPointImpl();
+    }
 
 
 }

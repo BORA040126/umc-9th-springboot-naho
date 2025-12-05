@@ -29,31 +29,51 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
             ) throws ServletException, IOException{
-        try{
-            String token = request.getHeader("Authorization");
-            if(token==null || !token.startsWith("Bearer ")){
-                filterChain.doFilter(request,response);
-                return;
-            }
-            token=token.replace("Bearer ","");
-            if(jwtUtil.isValid(token)){
-                String email=jwtUtil.getEmail(token);
-                UserDetails user = customUserDetailsService.loadUserByUsername(email);
-                Authentication auth = new UsernamePasswordAuthenticationToken(user,
-                        null,
-                        user.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
-            filterChain.doFilter(request,response);
-        } catch(Exception e){
-            response.setContentType("application/json;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//        try{
+//            String token = request.getHeader("Authorization");
+//            if(token==null || !token.startsWith("Bearer ")){
+//                filterChain.doFilter(request,response);
+//                return;
+//            }
+//            token=token.replace("Bearer ","");
+//            if(jwtUtil.isValid(token)){
+//                String email=jwtUtil.getEmail(token);
+//                UserDetails user = customUserDetailsService.loadUserByUsername(email);
+//                Authentication auth = new UsernamePasswordAuthenticationToken(user,
+//                        null,
+//                        user.getAuthorities());
+//                SecurityContextHolder.getContext().setAuthentication(auth);
+//            }
+//            filterChain.doFilter(request,response);
+//        } catch(Exception e){
+//            response.setContentType("application/json;charset=utf-8");
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//
+//            ApiResponse<Void> errorResponse = ApiResponse.onFailure(GeneralErrorCode.UNAUTHORIZED,null);
+//            ObjectMapper mapper = new ObjectMapper();
+//            mapper.writeValue(response.getOutputStream(),errorResponse);
+//
+//        }
+        String token = request.getHeader("Authorization");
 
-            ApiResponse<Void> errorResponse = ApiResponse.onFailure(GeneralErrorCode.UNAUTHORIZED,null);
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(response.getOutputStream(),errorResponse);
-
+        if (token == null || !token.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
+        token = token.replace("Bearer ", "");
+
+        if (jwtUtil.isValid(token)) {
+
+            String email = jwtUtil.getEmail(token);
+            UserDetails user = customUserDetailsService.loadUserByUsername(email);
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    user,
+                    null,
+                    user.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+        filterChain.doFilter(request, response);
     }
 
 
