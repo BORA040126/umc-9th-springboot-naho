@@ -22,6 +22,7 @@ public class MemberController {
             @RequestBody @Valid MemberReqDTO.JoinDTO dto
     )
     {
+        MemberResDTO.JoinDTO res=memberCommandService.signup(dto);
         return ApiResponse.onSuccess(MemberSuccessCode.FOUND);
     }
 

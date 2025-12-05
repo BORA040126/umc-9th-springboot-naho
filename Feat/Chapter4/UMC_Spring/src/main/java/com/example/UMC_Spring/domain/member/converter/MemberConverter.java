@@ -3,6 +3,7 @@ package com.example.UMC_Spring.domain.member.converter;
 import com.example.UMC_Spring.domain.member.dto.MemberReqDTO;
 import com.example.UMC_Spring.domain.member.dto.MemberResDTO;
 import com.example.UMC_Spring.domain.member.entity.Member;
+import com.example.UMC_Spring.global.auth.enums.Role;
 
 public class MemberConverter {
     public static MemberResDTO.JoinDTO toJoinDTO(Member member){
@@ -11,9 +12,12 @@ public class MemberConverter {
                 .build();
     }
 
-    public static Member toMember(MemberReqDTO.JoinDTO dto){
+    public static Member toMember(MemberReqDTO.JoinDTO dto, String password, Role role){
         return Member.builder()
                 .memberName(dto.memberName())
+                .email(dto.email())
+                .password(password)
+                .role(role)
                 .memberBirthday(dto.memberBirthday())
                 .memberAddress(dto.memberAddress())
                 .memberDetailAddress(dto.memberDetailAddress())

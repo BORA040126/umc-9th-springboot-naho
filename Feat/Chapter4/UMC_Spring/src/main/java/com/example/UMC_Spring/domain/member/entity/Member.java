@@ -1,6 +1,7 @@
 package com.example.UMC_Spring.domain.member.entity;
 
 import com.example.UMC_Spring.domain.member.enums.Gender;
+import com.example.UMC_Spring.global.auth.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,7 +22,7 @@ public class Member {
 
     //사용자 ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
     //이름
@@ -47,7 +48,13 @@ public class Member {
 
     //이메일
     @Column(name="email",nullable = false)
-    private String memberEmail;
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     //포인트
     //기본 값 0으로 지정
@@ -69,8 +76,12 @@ public class Member {
     @Column(name="modifiedAt",nullable = false)
     private LocalDateTime updatedAt;
 
-
-
+    //CreatedAt용
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
 
 
