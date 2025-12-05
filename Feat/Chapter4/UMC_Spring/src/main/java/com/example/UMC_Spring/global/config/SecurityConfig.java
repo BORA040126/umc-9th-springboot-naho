@@ -20,20 +20,21 @@ public class SecurityConfig {
 
     private final String[] allowUris=
     {
-        "/swagger-ui.**",
-        "/swagger-resources/**",
-        "/v3/api-docs/**",
+            "/swagger-ui.**",
+            "/swagger-resources/**",
+            "/v3/api-docs/**",
+            "/sign-up"
     };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests-> requests
                         .requestMatchers(allowUris).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui/index.html").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form
-                        .defaultSuccessUrl("/swagger-ui/index.html",true)
+                        .defaultSuccessUrl("/",true)
                         .permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
